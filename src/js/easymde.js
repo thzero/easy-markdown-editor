@@ -133,7 +133,7 @@ function createToolbarButton(options, enableTooltips, shortcuts) {
             el.title = el.title.replace('Ctrl', '⌘');
             el.title = el.title.replace('Alt', '⌥');
         }
-    }
+	}
 
     if (options.noDisable) {
         el.classList.add('no-disable');
@@ -143,7 +143,7 @@ function createToolbarButton(options, enableTooltips, shortcuts) {
         el.classList.add('no-mobile');
     }
 
-    // Provide backwards compatibility with simple-markdown-editor by adding custom classes to the button.
+	// Provide backwards compatibility with simple-markdown-editor by adding custom classes to the button.
     var classNameParts = options.className.split(' ');
     var iconClasses = [];
     for (var classNameIndex = 0; classNameIndex < classNameParts.length; classNameIndex++) {
@@ -1513,7 +1513,8 @@ function EasyMDE(options) {
     if (options.element) {
         this.element = options.element;
     } else if (options.element === null) {
-        // This means that the element option was specified, but no element was found
+		// This means that the element option was specified, but no element was found
+		// eslint-disable-next-line
         console.log('EasyMDE: Error. No element was found.');
         return;
     }
@@ -1522,17 +1523,18 @@ function EasyMDE(options) {
     // Handle toolbar
     if (options.toolbar === undefined) {
         // Initialize
-        options.toolbar = [];
+		options.toolbar = [];
 
+		let toolbarButtons = { ...toolbarBuiltInButtons, ...options.toolbarAdditionalButtons };
 
         // Loop over the built in buttons, to get the preferred order
-        for (var key in toolbarBuiltInButtons) {
-            if (Object.prototype.hasOwnProperty.call(toolbarBuiltInButtons, key)) {
+        for (var key in toolbarButtons) {
+            if (Object.prototype.hasOwnProperty.call(toolbarButtons, key)) {
                 if (key.indexOf('separator-') != -1) {
                     options.toolbar.push('|');
                 }
 
-                if (toolbarBuiltInButtons[key].default === true || (options.showIcons && options.showIcons.constructor === Array && options.showIcons.indexOf(key) != -1)) {
+                if (toolbarButtons[key].default === true || (options.showIcons && options.showIcons.constructor === Array && options.showIcons.indexOf(key) != -1)) {
                     options.toolbar.push(key);
                 }
             }
@@ -1718,8 +1720,10 @@ EasyMDE.prototype.updateStatusBar = function (itemName, content) {
     if (matchingClasses.length === 1) {
         this.gui.statusbar.getElementsByClassName(itemName)[0].textContent = content;
     } else if (matchingClasses.length === 0) {
+		// eslint-disable-next-line
         console.log('EasyMDE: status bar item ' + itemName + ' was not found.');
     } else {
+		// eslint-disable-next-line
         console.log('EasyMDE: Several status bar items named ' + itemName + ' was found.');
     }
 };
@@ -1914,6 +1918,7 @@ EasyMDE.prototype.autosave = function () {
         var easyMDE = this;
 
         if (this.options.autosave.uniqueId == undefined || this.options.autosave.uniqueId == '') {
+			// eslint-disable-next-line
             console.log('EasyMDE: You must set a uniqueId to use the autosave feature');
             return;
         }
@@ -1970,6 +1975,7 @@ EasyMDE.prototype.autosave = function () {
             easyMDE.autosave();
         }, this.options.autosave.delay || 10000);
     } else {
+		// eslint-disable-next-line
         console.log('EasyMDE: localStorage not available, cannot autosave');
     }
 };
@@ -1977,12 +1983,14 @@ EasyMDE.prototype.autosave = function () {
 EasyMDE.prototype.clearAutosavedValue = function () {
     if (isLocalStorageAvailable()) {
         if (this.options.autosave == undefined || this.options.autosave.uniqueId == undefined || this.options.autosave.uniqueId == '') {
+			// eslint-disable-next-line
             console.log('EasyMDE: You must set a uniqueId to clear the autosave value');
             return;
         }
 
         localStorage.removeItem('smde_' + this.options.autosave.uniqueId);
     } else {
+		// eslint-disable-next-line
         console.log('EasyMDE: localStorage not available, cannot autosave');
     }
 };
@@ -2072,6 +2080,7 @@ EasyMDE.prototype.uploadImage = function (file, onSuccess, onError) {
         try {
             var response = JSON.parse(this.responseText);
         } catch (error) {
+			// eslint-disable-next-line
             console.error('EasyMDE: The server did not return a valid json.');
             onErrorSup(fillErrorMessage(self.options.errorMessages.importError));
             return;
@@ -2083,7 +2092,8 @@ EasyMDE.prototype.uploadImage = function (file, onSuccess, onError) {
                 onErrorSup(fillErrorMessage(self.options.errorMessages[response.error]));
             } else if (response.error) {  // server side generated error message
                 onErrorSup(fillErrorMessage(response.error));
-            } else {  //unknown error
+			} else {  //unknown error
+				// eslint-disable-next-line
                 console.error('EasyMDE: Received an unexpected response after uploading the image.'
                     + this.status + ' (' + this.statusText + ')');
                 onErrorSup(fillErrorMessage(self.options.errorMessages.importError));
@@ -2092,6 +2102,7 @@ EasyMDE.prototype.uploadImage = function (file, onSuccess, onError) {
     };
 
     request.onerror = function (event) {
+		// eslint-disable-next-line
         console.error('EasyMDE: An unexpected error occurred when trying to upload the image.'
             + event.target.status + ' (' + event.target.statusText + ')');
         onErrorSup(self.options.errorMessages.importError);
@@ -2197,12 +2208,28 @@ EasyMDE.prototype.createToolbar = function (items) {
 
     if (!items || items.length === 0) {
         return;
-    }
-    var i;
-    for (i = 0; i < items.length; i++) {
-        if (toolbarBuiltInButtons[items[i]] != undefined) {
-            items[i] = toolbarBuiltInButtons[items[i]];
-        }
+	}
+
+	let toolbarButtons = {};
+	let availableToolbarButtons = {...toolbarBuiltInButtons, ...this.options.toolbarAdditionalButtons };
+
+	var id;
+	var temp;
+	for (let i in items) {
+		temp = items[i];
+		if (typeof temp === 'object' || temp instanceof Object)
+			id = temp.id;
+		else if (typeof temp === 'string' || temp instanceof String)
+			id = temp;
+
+		if (!id || id === '')
+			continue;
+
+		if (availableToolbarButtons[id] === undefined)
+			continue;
+
+		//toolbarButtons[i] = availableToolbarButtons[id];
+		toolbarButtons[i] = {...availableToolbarButtons[id], ...temp };
     }
 
     var bar = document.createElement('div');
@@ -2211,27 +2238,27 @@ EasyMDE.prototype.createToolbar = function (items) {
     var self = this;
 
     var toolbarData = {};
-    self.toolbar = items;
+    self.toolbar = toolbarButtons;
 
-    for (i = 0; i < items.length; i++) {
-        if (items[i].name == 'guide' && self.options.toolbarGuideIcon === false)
+	for (let i in toolbarButtons) {
+        if (toolbarButtons[i].name == 'guide' && self.options.toolbarGuideIcon === false)
             continue;
 
-        if (self.options.hideIcons && self.options.hideIcons.indexOf(items[i].name) != -1)
+        if (self.options.hideIcons && self.options.hideIcons.indexOf(toolbarButtons[i].name) != -1)
             continue;
 
         // Fullscreen does not work well on mobile devices (even tablets)
         // In the future, hopefully this can be resolved
-        if ((items[i].name == 'fullscreen' || items[i].name == 'side-by-side') && isMobile())
+        if ((toolbarButtons[i].name == 'fullscreen' || toolbarButtons[i].name == 'side-by-side') && isMobile())
             continue;
 
 
         // Don't include trailing separators
-        if (items[i] === '|') {
+        if (toolbarButtons[i] === '|') {
             var nonSeparatorIconsFollow = false;
 
-            for (var x = (i + 1); x < items.length; x++) {
-                if (items[x] !== '|' && (!self.options.hideIcons || self.options.hideIcons.indexOf(items[x].name) == -1)) {
+            for (var x = (i + 1); x < toolbarButtons.length; x++) {
+                if (toolbarButtons[x] !== '|' && (!self.options.hideIcons || self.options.hideIcons.indexOf(toolbarButtons[x].name) == -1)) {
                     nonSeparatorIconsFollow = true;
                 }
             }
@@ -2281,7 +2308,7 @@ EasyMDE.prototype.createToolbar = function (items) {
                 imageInput.style.opacity = 0;
                 bar.appendChild(imageInput);
             }
-        })(items[i]);
+        })(toolbarButtons[i]);
     }
 
     self.toolbarElements = toolbarData;
