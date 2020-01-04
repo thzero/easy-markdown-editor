@@ -144,28 +144,34 @@ function createToolbarButton(options, enableTooltips, shortcuts) {
     }
 
 	// Provide backwards compatibility with simple-markdown-editor by adding custom classes to the button.
-    var classNameParts = options.className.split(' ');
-    var iconClasses = [];
-    for (var classNameIndex = 0; classNameIndex < classNameParts.length; classNameIndex++) {
-        var classNamePart = classNameParts[classNameIndex];
-        // Split icon classes from the button.
-        // Regex will detect "fa", "fas", "fa-something" and "fa-some-icon-1", but not "fanfare".
-        if (classNamePart.match(/^fa([srlb]|(-[\w-]*)|$)/)) {
-            iconClasses.push(classNamePart);
-        } else {
-            el.classList.add(classNamePart);
-        }
+	if (options.className) {
+		var classNameParts = options.className.split(' ');
+		var iconClasses = [];
+		for (var classNameIndex = 0; classNameIndex < classNameParts.length; classNameIndex++) {
+			var classNamePart = classNameParts[classNameIndex];
+			// Split icon classes from the button.
+			// Regex will detect "fa", "fas", "fa-something" and "fa-some-icon-1", but not "fanfare".
+			if (classNamePart.match(/^fa([srlb]|(-[\w-]*)|$)/)) {
+				iconClasses.push(classNamePart);
+			} else {
+				el.classList.add(classNamePart);
+			}
+		}
+
+		// Create icon element and append as a child to the button
+		var icon = document.createElement('i');
+		for (var iconClassIndex = 0; iconClassIndex < iconClasses.length; iconClassIndex++) {
+			var iconClass = iconClasses[iconClassIndex];
+			icon.classList.add(iconClass);
+		}
+		el.appendChild(icon);
+    }
+    else {
+        // eslint-disable-next-line
+        console.log(`EasyMDE: Error. No className found for '${options.id}'.`);
     }
 
     el.tabIndex = -1;
-
-    // Create icon element and append as a child to the button
-    var icon = document.createElement('i');
-    for (var iconClassIndex = 0; iconClassIndex < iconClasses.length; iconClassIndex++) {
-        var iconClass = iconClasses[iconClassIndex];
-        icon.classList.add(iconClass);
-    }
-    el.appendChild(icon);
 
     return el;
 }
@@ -2213,6 +2219,13 @@ EasyMDE.prototype.createToolbar = function (items) {
 	let toolbarButtons = {};
 	let availableToolbarButtons = {...toolbarBuiltInButtons, ...this.options.toolbarAdditionalButtons };
 
+	// var i;
+    // for (i = 0; i < items.length; i++) {
+        // if (toolbarButtons[items[i]] != undefined) {
+        //     items[i] = toolbarButtons[items[i]];
+		// }
+
+
 	var id;
 	var temp;
 	for (let i in items) {
@@ -2228,6 +2241,7 @@ EasyMDE.prototype.createToolbar = function (items) {
 		if (availableToolbarButtons[id] === undefined)
 			continue;
 
+		//toolbarButtons[i] = availableToolbarButtons[id];
 		toolbarButtons[i] = {...availableToolbarButtons[id], ...temp };
     }
 
@@ -2239,7 +2253,7 @@ EasyMDE.prototype.createToolbar = function (items) {
     var toolbarData = {};
     self.toolbar = toolbarButtons;
 
-	for (let i in toolbarButtons) {
+    for (let i in toolbarButtons) {
         if (toolbarButtons[i].name == 'guide' && self.options.toolbarGuideIcon === false)
             continue;
 
