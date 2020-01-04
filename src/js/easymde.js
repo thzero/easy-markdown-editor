@@ -2228,7 +2228,6 @@ EasyMDE.prototype.createToolbar = function (items) {
 		if (availableToolbarButtons[id] === undefined)
 			continue;
 
-		//toolbarButtons[i] = availableToolbarButtons[id];
 		toolbarButtons[i] = {...availableToolbarButtons[id], ...temp };
     }
 
