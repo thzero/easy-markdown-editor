@@ -127,7 +127,7 @@ function createToolbarButton(options, enableTooltips, shortcuts) {
     }
 
     if (options.title && enableTooltips) {
-        el.title = createTooltip(options.title, options.action, shortcuts);
+        el.title = createToolbarButtonTitle(options.title, options.action, shortcuts);
 
         if (isMac) {
             el.title = el.title.replace('Ctrl', '⌘');
@@ -183,7 +183,7 @@ function createSep() {
     return el;
 }
 
-function createTooltip(title, action, shortcuts) {
+function createToolbarButtonTitle(title, action, shortcuts) {
     var actionName;
     var tooltip = title;
 
@@ -2253,7 +2253,7 @@ EasyMDE.prototype.createToolbar = function (items) {
     var toolbarData = {};
     self.toolbar = toolbarButtons;
 
-    for (let i in toolbarButtons) {
+	for (let i in toolbarButtons) {
         if (toolbarButtons[i].name == 'guide' && self.options.toolbarGuideIcon === false)
             continue;
 
