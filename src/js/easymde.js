@@ -176,7 +176,7 @@ function createToolbarButton(options, enableTooltips, shortcuts) {
     return el;
 }
 
-function createSep() {
+function createToolbarSeparator() {
     var el = document.createElement('i');
     el.className = 'separator';
     el.innerHTML = '|';
@@ -2285,7 +2285,7 @@ EasyMDE.prototype.createToolbar = function (items) {
         (function (item) {
             var el;
             if (item === '|') {
-                el = createSep();
+                el = createToolbarSeparator();
             } else {
                 el = createToolbarButton(item, self.options.toolbarTips, self.options.shortcuts);
             }
