@@ -1376,7 +1376,7 @@ var toolbarBuiltInButtons = {
         className: 'link',
         name: 'Link',
         action: drawLink,
-        classNameIcon: 'fa fa-external-link',
+        classNameIcon: 'fa fa-link',
         title: 'Create Link',
         default: true,
     },
