@@ -116,14 +116,15 @@ function fixShortcut(name) {
  */
 function createToolbarButton(options, enableTooltips, shortcuts) {
     options = options || {};
-    var el = document.createElement('button');
-    el.className = options.name;
+	var el = document.createElement('button');
+	el.name = options.name;
+    el.className = options.className;
     el.setAttribute('type', 'button');
     enableTooltips = (enableTooltips == undefined) ? true : enableTooltips;
 
     // Properly hande custom shortcuts
-    if (options.name && options.name in shortcuts) {
-        bindings[options.name] = options.action;
+    if (options.id && options.id in shortcuts) {
+        bindings[options.id] = options.action;
     }
 
     if (options.title && enableTooltips) {
@@ -1247,138 +1248,178 @@ function wordCount(data) {
 
 var toolbarBuiltInButtons = {
     'bold': {
-        name: 'bold',
+        id: 'bold',
+        className: 'bold',
+        name: 'Bold',
         action: toggleBold,
         classNameIcon: 'fa fa-bold',
         title: 'Bold',
         default: true,
     },
     'italic': {
-        name: 'italic',
+        id: 'italic',
+        className: 'italic',
+        name: 'Italic',
         action: toggleItalic,
         classNameIcon: 'fa fa-italic',
         title: 'Italic',
         default: true,
     },
     'strikethrough': {
-        name: 'strikethrough',
+        id: 'strikethrough',
+        className: 'strikethrough',
+        name: 'Strikethrough',
         action: toggleStrikethrough,
         classNameIcon: 'fa fa-strikethrough',
         title: 'Strikethrough',
     },
     'heading': {
-        name: 'heading',
+        id: 'heading',
+        className: 'heading',
+        name: 'Heading',
         action: toggleHeadingSmaller,
         classNameIcon: 'fa fa-header fa-heading',
         title: 'Heading',
         default: true,
     },
     'heading-smaller': {
-        name: 'heading-smaller',
+        id: 'heading-smaller',
+        className: 'heading-smaller',
+        name: 'Heading Smaller',
         action: toggleHeadingSmaller,
         classNameIcon: 'fa fa-header fa-heading header-smaller',
         title: 'Smaller Heading',
     },
     'heading-bigger': {
-        name: 'heading-bigger',
+        id: 'heading-bigger',
+        className: 'heading-bigger',
+        name: 'Heading Bigger',
         action: toggleHeadingBigger,
         classNameIcon: 'fa fa-header fa-heading header-bigger',
         title: 'Bigger Heading',
     },
     'heading-1': {
-        name: 'heading-1',
+        id: 'heading-1',
+        className: 'heading-1',
+        name: 'Heading 1',
         action: toggleHeading1,
         classNameIcon: 'fa fa-header fa-heading header-1',
         title: 'Big Heading',
     },
     'heading-2': {
-        name: 'heading-2',
+        id: 'heading-2',
+        className: 'heading-2',
+        name: 'Heading 2',
         action: toggleHeading2,
         classNameIcon: 'fa fa-header fa-heading header-2',
         title: 'Medium Heading',
     },
     'heading-3': {
-        name: 'heading-3',
+        id: 'heading-3',
+        className: 'heading-3',
+        name: 'Heading 3',
         action: toggleHeading3,
         classNameIcon: 'fa fa-header fa-heading header-3',
         title: 'Small Heading',
     },
     'separator-1': {
-        name: 'separator-1',
+        id: 'separator-3',
     },
     'code': {
-        name: 'code',
+        id: 'code',
+        className: 'code',
+        name: 'Code',
         action: toggleCodeBlock,
         classNameIcon: 'fa fa-code',
         title: 'Code',
     },
     'quote': {
-        name: 'quote',
+        id: 'quote',
+        className: 'quote',
+        name: 'Quote',
         action: toggleBlockquote,
         classNameIcon: 'fa fa-quote-left',
         title: 'Quote',
         default: true,
     },
     'unordered-list': {
-        name: 'unordered-list',
+        id: 'unordered-list',
+        className: 'unordered-list',
+        name: 'Unordered List',
         action: toggleUnorderedList,
         classNameIcon: 'fa fa-list-ul',
         title: 'Generic List',
         default: true,
     },
     'ordered-list': {
-        name: 'ordered-list',
+        id: 'ordered-list',
+        className: 'ordered-list',
+        name: 'Ordered List',
         action: toggleOrderedList,
         classNameIcon: 'fa fa-list-ol',
         title: 'Numbered List',
         default: true,
     },
     'clean-block': {
-        name: 'clean-block',
+        id: 'clean-block',
+        className: 'clean-block',
+        name: 'Clean Block',
         action: cleanBlock,
         classNameIcon: 'fa fa-eraser',
         title: 'Clean block',
     },
     'separator-2': {
-        name: 'separator-2',
+        id: 'separator-2',
     },
     'link': {
-        name: 'link',
+        id: 'link',
+        className: 'link',
+        name: 'Link',
         action: drawLink,
         classNameIcon: 'fa fa-external-link',
         title: 'Create Link',
         default: true,
     },
     'image': {
-        name: 'image',
+        id: 'image',
+        className: 'image',
+        name: 'Image',
         action: drawImage,
         classNameIcon: 'fa fa-image',
         title: 'Insert Image',
         default: true,
     },
     'upload-image': {
-        name: 'upload-image',
+        id: 'upload-image',
+        className: 'upload-image',
+        name: 'Upload Image',
         action: drawUploadedImage,
         classNameIcon: 'fa fa-image',
         title: 'Import an image',
     },
     'table': {
-        name: 'table',
+        id: 'table',
+        className: 'table',
+        name: 'Table',
         action: drawTable,
         classNameIcon: 'fa fa-table',
         title: 'Insert Table',
     },
     'horizontal-rule': {
-        name: 'horizontal-rule',
+        id: 'horizontal-rule',
+        className: 'horizontal-rule',
+        name: 'Horizontal Rule',
         action: drawHorizontalRule,
         classNameIcon: 'fa fa-minus',
         title: 'Insert Horizontal Line',
     },
     'separator-3': {
-        name: 'separator-3',
+        id: 'separator-3',
     },
     'preview': {
-        name: 'preview',
+        id: 'preview',
+        className: 'preview',
+        name: 'Preview',
         action: togglePreview,
         classNameIcon: 'fa fa-eye',
         noDisable: true,
@@ -1386,7 +1427,9 @@ var toolbarBuiltInButtons = {
         default: true,
     },
     'side-by-side': {
-        name: 'side-by-side',
+        id: 'side-by-side',
+        className: 'side-by-side',
+        name: 'Side by Side',
         action: toggleSideBySide,
         classNameIcon: 'fa fa-columns',
         noDisable: true,
@@ -1395,7 +1438,9 @@ var toolbarBuiltInButtons = {
         default: true,
     },
     'fullscreen': {
-        name: 'fullscreen',
+        id: 'fullscreen',
+        className: 'fullscreen',
+        name: 'Fullscreen',
         action: toggleFullScreen,
         classNameIcon: 'fa fa-arrows-alt',
         noDisable: true,
@@ -1404,10 +1449,12 @@ var toolbarBuiltInButtons = {
         default: true,
     },
     'separator-4': {
-        name: 'separator-4',
+        id: 'separator-4',
     },
     'guide': {
-        name: 'guide',
+        id: 'guide',
+        className: 'guide',
+        name: 'Guide',
         action: 'https://www.markdownguide.org/basic-syntax/',
         classNameIcon: 'fa fa-question-circle',
         noDisable: true,
@@ -1415,17 +1462,21 @@ var toolbarBuiltInButtons = {
         default: true,
     },
     'separator-5': {
-        name: 'separator-5',
+        id: 'separator-5',
     },
     'undo': {
-        name: 'undo',
+        id: 'undo',
+        className: 'undo',
+        name: 'Undo',
         action: undo,
         classNameIcon: 'fa fa-undo',
         noDisable: true,
         title: 'Undo',
     },
     'redo': {
-        name: 'redo',
+        id: 'redo',
+        className: 'redo',
+        name: 'Redo',
         action: redo,
         classNameIcon: 'fa fa-repeat fa-redo',
         noDisable: true,
@@ -2247,15 +2298,15 @@ EasyMDE.prototype.createToolbar = function (items) {
     self.toolbar = toolbarButtons;
 
 	for (let i in toolbarButtons) {
-        if (toolbarButtons[i].name == 'guide' && self.options.toolbarGuideIcon === false)
+        if (toolbarButtons[i].id == 'guide' && self.options.toolbarGuideIcon === false)
             continue;
 
-        if (self.options.hideIcons && self.options.hideIcons.indexOf(toolbarButtons[i].name) != -1)
+        if (self.options.hideIcons && self.options.hideIcons.indexOf(toolbarButtons[i].id) != -1)
             continue;
 
         // Fullscreen does not work well on mobile devices (even tablets)
         // In the future, hopefully this can be resolved
-        if ((toolbarButtons[i].name == 'fullscreen' || toolbarButtons[i].name == 'side-by-side') && isMobile())
+        if ((toolbarButtons[i].id == 'fullscreen' || toolbarButtons[i].id == 'side-by-side') && isMobile())
             continue;
 
 
@@ -2264,7 +2315,7 @@ EasyMDE.prototype.createToolbar = function (items) {
             var nonSeparatorIconsFollow = false;
 
             for (var x = (i + 1); x < toolbarButtons.length; x++) {
-                if (toolbarButtons[x] !== '|' && (!self.options.hideIcons || self.options.hideIcons.indexOf(toolbarButtons[x].name) == -1)) {
+                if (toolbarButtons[x] !== '|' && (!self.options.hideIcons || self.options.hideIcons.indexOf(toolbarButtons[x].id) == -1)) {
                     nonSeparatorIconsFollow = true;
                 }
             }
@@ -2298,12 +2349,12 @@ EasyMDE.prototype.createToolbar = function (items) {
                 }
             }
 
-            toolbarData[item.name || item] = el;
+            toolbarData[item.id || item] = el;
             bar.appendChild(el);
 
             // Create the input element (ie. <input type='file'>), used among
             // with the 'import-image' icon to open the browse-file window.
-            if (item.name === 'upload-image') {
+            if (item.id === 'upload-image') {
                 var imageInput = document.createElement('input');
                 imageInput.className = 'imageInput';
                 imageInput.type = 'file';
