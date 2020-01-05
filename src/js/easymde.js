@@ -2219,13 +2219,6 @@ EasyMDE.prototype.createToolbar = function (items) {
 	let toolbarButtons = {};
 	let availableToolbarButtons = {...toolbarBuiltInButtons, ...this.options.toolbarAdditionalButtons };
 
-	// var i;
-    // for (i = 0; i < items.length; i++) {
-        // if (toolbarButtons[items[i]] != undefined) {
-        //     items[i] = toolbarButtons[items[i]];
-		// }
-
-
 	var id;
 	var temp;
 	for (let i in items) {
