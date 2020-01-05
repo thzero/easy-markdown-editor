@@ -144,8 +144,8 @@ function createToolbarButton(options, enableTooltips, shortcuts) {
     }
 
 	// Provide backwards compatibility with simple-markdown-editor by adding custom classes to the button.
-	if (options.className) {
-		var classNameParts = options.className.split(' ');
+	if (options.classNameIcon) {
+		var classNameParts = options.classNameIcon.split(' ');
 		var iconClasses = [];
 		for (var classNameIndex = 0; classNameIndex < classNameParts.length; classNameIndex++) {
 			var classNamePart = classNameParts[classNameIndex];
@@ -1249,58 +1249,58 @@ var toolbarBuiltInButtons = {
     'bold': {
         name: 'bold',
         action: toggleBold,
-        className: 'fa fa-bold',
+        classNameIcon: 'fa fa-bold',
         title: 'Bold',
         default: true,
     },
     'italic': {
         name: 'italic',
         action: toggleItalic,
-        className: 'fa fa-italic',
+        classNameIcon: 'fa fa-italic',
         title: 'Italic',
         default: true,
     },
     'strikethrough': {
         name: 'strikethrough',
         action: toggleStrikethrough,
-        className: 'fa fa-strikethrough',
+        classNameIcon: 'fa fa-strikethrough',
         title: 'Strikethrough',
     },
     'heading': {
         name: 'heading',
         action: toggleHeadingSmaller,
-        className: 'fa fa-header fa-heading',
+        classNameIcon: 'fa fa-header fa-heading',
         title: 'Heading',
         default: true,
     },
     'heading-smaller': {
         name: 'heading-smaller',
         action: toggleHeadingSmaller,
-        className: 'fa fa-header fa-heading header-smaller',
+        classNameIcon: 'fa fa-header fa-heading header-smaller',
         title: 'Smaller Heading',
     },
     'heading-bigger': {
         name: 'heading-bigger',
         action: toggleHeadingBigger,
-        className: 'fa fa-header fa-heading header-bigger',
+        classNameIcon: 'fa fa-header fa-heading header-bigger',
         title: 'Bigger Heading',
     },
     'heading-1': {
         name: 'heading-1',
         action: toggleHeading1,
-        className: 'fa fa-header fa-heading header-1',
+        classNameIcon: 'fa fa-header fa-heading header-1',
         title: 'Big Heading',
     },
     'heading-2': {
         name: 'heading-2',
         action: toggleHeading2,
-        className: 'fa fa-header fa-heading header-2',
+        classNameIcon: 'fa fa-header fa-heading header-2',
         title: 'Medium Heading',
     },
     'heading-3': {
         name: 'heading-3',
         action: toggleHeading3,
-        className: 'fa fa-header fa-heading header-3',
+        classNameIcon: 'fa fa-header fa-heading header-3',
         title: 'Small Heading',
     },
     'separator-1': {
@@ -1309,34 +1309,34 @@ var toolbarBuiltInButtons = {
     'code': {
         name: 'code',
         action: toggleCodeBlock,
-        className: 'fa fa-code',
+        classNameIcon: 'fa fa-code',
         title: 'Code',
     },
     'quote': {
         name: 'quote',
         action: toggleBlockquote,
-        className: 'fa fa-quote-left',
+        classNameIcon: 'fa fa-quote-left',
         title: 'Quote',
         default: true,
     },
     'unordered-list': {
         name: 'unordered-list',
         action: toggleUnorderedList,
-        className: 'fa fa-list-ul',
+        classNameIcon: 'fa fa-list-ul',
         title: 'Generic List',
         default: true,
     },
     'ordered-list': {
         name: 'ordered-list',
         action: toggleOrderedList,
-        className: 'fa fa-list-ol',
+        classNameIcon: 'fa fa-list-ol',
         title: 'Numbered List',
         default: true,
     },
     'clean-block': {
         name: 'clean-block',
         action: cleanBlock,
-        className: 'fa fa-eraser',
+        classNameIcon: 'fa fa-eraser',
         title: 'Clean block',
     },
     'separator-2': {
@@ -1345,33 +1345,33 @@ var toolbarBuiltInButtons = {
     'link': {
         name: 'link',
         action: drawLink,
-        className: 'fa fa-link',
+        classNameIcon: 'fa fa-external-link',
         title: 'Create Link',
         default: true,
     },
     'image': {
         name: 'image',
         action: drawImage,
-        className: 'fa fa-image',
+        classNameIcon: 'fa fa-image',
         title: 'Insert Image',
         default: true,
     },
     'upload-image': {
         name: 'upload-image',
         action: drawUploadedImage,
-        className: 'fa fa-image',
+        classNameIcon: 'fa fa-image',
         title: 'Import an image',
     },
     'table': {
         name: 'table',
         action: drawTable,
-        className: 'fa fa-table',
+        classNameIcon: 'fa fa-table',
         title: 'Insert Table',
     },
     'horizontal-rule': {
         name: 'horizontal-rule',
         action: drawHorizontalRule,
-        className: 'fa fa-minus',
+        classNameIcon: 'fa fa-minus',
         title: 'Insert Horizontal Line',
     },
     'separator-3': {
@@ -1380,7 +1380,7 @@ var toolbarBuiltInButtons = {
     'preview': {
         name: 'preview',
         action: togglePreview,
-        className: 'fa fa-eye',
+        classNameIcon: 'fa fa-eye',
         noDisable: true,
         title: 'Toggle Preview',
         default: true,
@@ -1388,7 +1388,7 @@ var toolbarBuiltInButtons = {
     'side-by-side': {
         name: 'side-by-side',
         action: toggleSideBySide,
-        className: 'fa fa-columns',
+        classNameIcon: 'fa fa-columns',
         noDisable: true,
         noMobile: true,
         title: 'Toggle Side by Side',
@@ -1397,7 +1397,7 @@ var toolbarBuiltInButtons = {
     'fullscreen': {
         name: 'fullscreen',
         action: toggleFullScreen,
-        className: 'fa fa-arrows-alt',
+        classNameIcon: 'fa fa-arrows-alt',
         noDisable: true,
         noMobile: true,
         title: 'Toggle Fullscreen',
@@ -1409,7 +1409,7 @@ var toolbarBuiltInButtons = {
     'guide': {
         name: 'guide',
         action: 'https://www.markdownguide.org/basic-syntax/',
-        className: 'fa fa-question-circle',
+        classNameIcon: 'fa fa-question-circle',
         noDisable: true,
         title: 'Markdown Guide',
         default: true,
@@ -1420,14 +1420,14 @@ var toolbarBuiltInButtons = {
     'undo': {
         name: 'undo',
         action: undo,
-        className: 'fa fa-undo',
+        classNameIcon: 'fa fa-undo',
         noDisable: true,
         title: 'Undo',
     },
     'redo': {
         name: 'redo',
         action: redo,
-        className: 'fa fa-repeat fa-redo',
+        classNameIcon: 'fa fa-repeat fa-redo',
         noDisable: true,
         title: 'Redo',
     },
